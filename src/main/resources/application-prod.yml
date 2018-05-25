@@ -1,0 +1,30 @@
+spring:
+  datasource:
+      platform: mysql
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/recommender
+      username: root
+      password: buzhidao
+      #schema: classpath:schema-mysql.sql
+      sql-script-encoding: utf-8
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    show-sql: true

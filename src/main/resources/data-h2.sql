@@ -2,7 +2,7 @@
 -- Note that this script depends on a very specifc table layout.
 -- If column names or layout change, this script becomes invalid!
 
-INSERT INTO ratings (id, user, item, rating, timestamp, revision) VALUES (5, 23, 256, 4.0, 20000, '4b297694-bb35-42d5-80f3-ff1d89ad20dc');
+INSERT INTO ratings (id, user, item, rating, timestamp, revision) VALUES (6, 23, 256, 4.0, 20000, '4b297694-bb35-42d5-80f3-ff1d89ad20dc');
 INSERT INTO ratings (id, user, item, rating, timestamp, revision) VALUES (10, 735, 256, 3.5, 48000, '2ddada40-f5f5-4e51-8e5b-73f8666ef842');
 INSERT INTO ratings (id, user, item, rating, timestamp, revision) VALUES (15, 23, 32, 4.4, 32000, '22bf4033-d9cf-49e7-9733-30bd6b5975da');
 INSERT INTO ratings (id, user, item, rating, timestamp, revision) VALUES (25, 491, 2048, 5.0, 14000, 'b9e37828-a11a-4580-b7ed-605889987274');

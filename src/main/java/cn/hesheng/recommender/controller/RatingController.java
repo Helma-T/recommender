@@ -53,7 +53,7 @@ public class RatingController {
      */
     @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable Long id){
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
 }

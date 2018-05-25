@@ -1,11 +1,3 @@
 spring:
   profiles:
-    active: test
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/recommender
-    username: root
-    password: buzhidao
-  jpa:
-    show-sql: true
-    database: mysql
+    active: prod
