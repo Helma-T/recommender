@@ -70,6 +70,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+        <!-- add lensKit -->
+        <dependency>
+            <groupId>org.grouplens.lenskit</groupId>
+            <artifactId>lenskit-all</artifactId>
+            <version>2.2.1</version>
+            <!--<version>3.0-T5</version>-->
+        </dependency>
 	</dependencies>
 
 	<build>
