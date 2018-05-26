@@ -23,6 +23,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<lenskit>2.2.1</lenskit>
+		<swagger>2.8.0</swagger>
 	</properties>
 
 	<dependencies>
@@ -75,9 +77,28 @@
         <dependency>
             <groupId>org.grouplens.lenskit</groupId>
             <artifactId>lenskit-all</artifactId>
-            <version>2.2.1</version>
+            <version>${lenskit}</version>
             <!--<version>3.0-T5</version>-->
         </dependency>
+
+		<!-- add swagger api for easy-mock,
+		https://easy-mock.com/mock/
+		https://easy-mock.com/docs#yan-shi-xiang-mu
+
+		1 下载swagger api json到 easy-mock.com/mock/创建项目,编辑好生成数据的策略，然后在把easyMock生成的projectId，动态创建api文件
+		参考 https://easy-mock.github.io/easy-mock-cli/#/
+		https://github.com/easy-mock/easy-mock-cli
+		-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

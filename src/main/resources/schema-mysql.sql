@@ -4,7 +4,7 @@ use recommender;
 
 DROP TABLE IF EXISTS ratings;
 CREATE TABLE ratings (
-    id BIGINT not null,
+    id BIGINT not null AUTO_INCREMENT,
     user BIGINT not null,
     item BIGINT not null,
     rating REAL,
