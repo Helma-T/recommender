@@ -10,6 +10,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import java.io.Closeable;
 import java.util.*;
 
+import lombok.extern.slf4j.Slf4j;
 import org.grouplens.lenskit.core.LenskitRecommender;
 import org.grouplens.lenskit.cursors.Cursor;
 import org.grouplens.lenskit.cursors.Cursors;
@@ -17,9 +18,11 @@ import org.grouplens.lenskit.data.event.Event;
 import org.grouplens.lenskit.data.event.Rating;
 import org.grouplens.lenskit.data.history.ItemEventCollection;
 import org.grouplens.lenskit.data.history.UserHistory;
+import org.grouplens.lenskit.data.sql.JDBCRatingDAO;
 import org.grouplens.lenskit.scored.ScoredId;
 import org.grouplens.lenskit.vectors.VectorEntry;
 
+@Slf4j
 public class Session implements Closeable {
 
     private LenskitRecommender recommender;
@@ -33,7 +36,8 @@ public class Session implements Closeable {
      * @param recommender The {@link LenskitRecommender} that will provide
      * item rating predictions and recommendations.
      */
-    public Session(LenskitRecommender recommender) {
+    public Session(LenskitRecommender recommender,JDBCRatingServerDAO dao) {
+        this.dao = dao;
         eventMap = new Long2ObjectOpenHashMap<Event>();
         Cursor<? extends Event> eventCursor = dao.streamEvents();
         try {
@@ -274,6 +278,7 @@ public class Session implements Closeable {
                 latestRatings.remove(r.getUserId());
             }
             else if (users.contains(r.getUserId())) {
+                log.info("user {}  value {}",r.getUserId(), r.getPreference().getValue());
                 latestRatings.put(r.getUserId(), r.getPreference().getValue());
             }
         }

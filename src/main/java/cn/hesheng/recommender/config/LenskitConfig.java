@@ -1,6 +1,10 @@
 package cn.hesheng.recommender.config;
 
 
+import cn.hesheng.recommender.lenskit.Session;
+import cn.hesheng.recommender.lenskit.sql.BasicServerSQLStatementFactory;
+import cn.hesheng.recommender.lenskit.sql.JDBCRatingServerDAO;
+import cn.hesheng.recommender.model.Ratings;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.grouplens.lenskit.RecommenderBuildException;
@@ -10,12 +14,13 @@ import org.grouplens.lenskit.data.sql.JDBCRatingDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@EnableAutoConfiguration
+@Configuration
 @Slf4j
 public class LenskitConfig {
 
@@ -47,17 +52,37 @@ public class LenskitConfig {
     }
 
     /**
-     * 初始化推荐器
-     * @param dao
+     * recommender session
+     * @param dataSource
      * @return
      */
     @Bean
     @Autowired
-    public LenskitRecommender initLenskitRecommender(JDBCRatingDAO dao){
+    public JDBCRatingServerDAO initJDBCRatingServerDAO(DataSource dataSource){
+        JDBCRatingServerDAO dao = null;
+        log.debug("init recommender session ");
+        try {
+            BasicServerSQLStatementFactory basicServerSQLStatementFactory = new BasicServerSQLStatementFactory();
+            dao = new JDBCRatingServerDAO(dataSource.getConnection(),basicServerSQLStatementFactory,false);
+        } catch (SQLException e) {
+            log.error(e.getMessage(),e);
+        }
+        Preconditions.checkNotNull(dao,"JDBCRatingServerDAO 构建失败");
+        return dao;
+    }
+
+    /**
+     * 初始化推荐器
+     * @param serverDAO
+     * @return
+     */
+    @Bean
+    @Autowired
+    public Session initLenskitRecommender(JDBCRatingServerDAO serverDAO){
         LenskitRecommender rec = null;
         try {
             LenskitConfiguration config = new LenskitConfiguration();
-            config.addComponent(dao);
+            config.addComponent(serverDAO);
             /* additional configuration */
             rec = LenskitRecommender.build(config);
             /* do things with the recommender */
@@ -67,6 +92,9 @@ public class LenskitConfig {
 
         }
         Preconditions.checkNotNull(rec,"推荐者构建失败");
-        return rec;
+        Session session = new Session(rec,serverDAO);
+        Preconditions.checkNotNull(session,"推荐者session构建失败");
+        log.info("session {} ",session);
+        return session;
     }
 }
