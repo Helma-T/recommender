@@ -37,7 +37,7 @@ public class RatingController {
 //    @ApiOperation(value="创建投票", notes="根据投票对象创建用户")
 //    @ApiImplicitParam(name = "ratings", value = "投票实体", required = true, dataType = "Ratings")
     @PostMapping("/users")
-    public Object saveUser(@RequestBody Ratings ratings){
+    public Ratings saveUser(@RequestBody Ratings ratings){
         Ratings saveUser = repository.save(ratings);
         return saveUser;
     }
@@ -76,7 +76,7 @@ public class RatingController {
      * @return 信息
      */
     @GetMapping("/users/{id}")
-    public Object findUserById(@PathVariable Long id){
+    public Ratings findUserById(@PathVariable Long id){
         return repository.getOne(id);
     }
 
