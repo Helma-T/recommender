@@ -23,6 +23,7 @@ public class RedissonConfig {
     public RedissonClient redisson() throws IOException {
         RedissonClient redisson = Redisson.create(
                 Config.fromYAML(new ClassPathResource("redisson.yml").getInputStream()));
+        log.info("RedissonClient init ...");
         return redisson;
     }
 }
